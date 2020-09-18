@@ -1,0 +1,23 @@
+{% extends 'users/base_login_register.html' %}
+{% load crispy_forms_tags %}
+{% block login-register-content %}
+<div class="content-section">
+    <form method= "POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="text-muted">create your account</legend>
+            <hr id= "inside-form-hr" size= "2">
+            {{form|crispy}}
+            {{facutly_form|crispy}}
+        </fieldset>
+        <input type="submit" value= "create account" class="btn btn-success btn-block">
+
+    </form>
+    <hr id="outside-form-hr" size= "2">
+    <div class="pt-1 text-center">
+        <small class="text-muted">
+            i already have an account? <a href="{% url 'login' %}" class="ml-2">login</a>
+        </small>
+    </div>
+</div>
+{% endblock login-register-content %}

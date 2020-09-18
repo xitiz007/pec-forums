@@ -1,0 +1,24 @@
+{% extends 'forums/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 text-center">
+            <div id="intro">
+                <h2 class="college-title">POKHARA ENGINEERING COLLEGE</h2>
+                <h3 class="forum-title">FORUMS</h3>
+                <blockquote class="blockquote mt-2 mb-2">
+                    <p class="text-muted motto">Together we can</p>
+                </blockquote>
+            </div>
+            <img class="img-fluid" src="{% static 'forums/images/forum-banner.png' %}" alt="banner">
+        </div>
+        <div class="col-lg-6">
+            {% block login-register-content %}
+            {% endblock login-register-content %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

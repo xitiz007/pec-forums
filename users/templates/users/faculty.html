@@ -1,0 +1,111 @@
+{% extends 'forums/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="margin-bottom: 1rem;">
+                <div style="background: #fff; padding: 15px; border-radius: 5px;">
+                    <h6 class="text-uppercase">faculty name :  <span class="text-muted">{{faculty.faculty_name}}</span></h6>
+                    <h6 class="text-uppercase">date created :  <span class="text-muted">{{faculty.date_created|date:"j M, Y"}}</span></h6>
+                    <h6 class="text-uppercase">students joined :  <span class="text-muted">{{faculty.get_total_students_count}}</span></h6>
+                    <h6 class="text-uppercase">questions posted :  <span class="text-muted">{{faculty.get_posted_questions_count}}</span></h6>
+                </div>
+            </div>
+            <div class="col-md-8" style="margin-bottom: 1rem;">
+                <div style="background: #fff; padding: 15px; border-radius: 5px;">
+                    <h6 style="letter-spacing: 1px;" class="text-uppercase">students</h6>
+                    <hr>
+                    <form class="form-inline my-2 my-lg-0" method="GET">
+                        <input id="student-search" class="form-control mr-sm-2" type="search" placeholder="Search student..." aria-label="Search" name="name" style="display: inline-block;">
+                        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit" style="display: inline-block;">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{message.tags}} alert-dismissable text-center mt-2 mb-2">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for student in students %}
+                        <div class="students" style="margin: 1rem 0;">
+                            <img src="{{student.profile_picture.url}}" alt="user-profile" width="40px" height="40px" class="rounded-circle">
+                            <a href="{% url 'profile' student.user.id %}">{{student.user.first_name}} {{student.user.last_name}}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if students.has_other_pages %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            
+                            {% if students.has_previous %}
+                                <li class="page-item" title="previous">
+                                    <a class="page-link" href="?page={{students.previous_page_number}}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                {% if not students.number == 2 %}
+                                    <li class="page-item" title="first">
+                                        <a class="page-link" href="?page=1">
+                                            1
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{students.previous_page_number}}">
+                                        {{students.previous_page_number}}
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Previous" title="previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+
+                            {% for page_number in students.paginator.page_range %}
+                                {% if page_number == students.number %}
+                                    <li class="page-item">
+                                        <a class="btn btn-primary" href="?page={{page_number}}">{{page_number}}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if students.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{students.next_page_number}}">
+                                        {{students.next_page_number}}
+                                    </a>
+                                </li>
+                                {% if not students.number == students.paginator.num_pages|add:"-1" %}
+                                    <li class="page-item" title="last">
+                                        <a class="page-link" href="?page={{students.paginator.num_pages}}">
+                                            {{students.paginator.num_pages}}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                <li class="page-item" title="next">
+                                    <a class="page-link" href="?page={{students.next_page_number}}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item" title="next">
+                                    <a class="page-link" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

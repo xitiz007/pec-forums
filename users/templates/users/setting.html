@@ -1,0 +1,66 @@
+{% extends 'forums/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="user-profile-change-form" style="background-color: #fff;">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}} alert-dismissable text-center">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if not user.userprofile.has_user_set_faculty %}
+                    <div class="alert alert-warning alert-dismissable text-center">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        please set your faculty
+                    </div>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="form-type" value="update-profile">
+                    <fieldset class="form-group">
+                        <legend class="text-muted">User Profile</legend>
+                        <hr id= "inside-form-hr" size= "2">
+                        <img src="{{user.userprofile.profile_picture.url}}" alt="profile picture" title= "{{user.first_name}} {{user.last_name}}" class="profile-picture-setting">
+                        {{user_profile_model_form|crispy}}
+                        {{user_model_form|crispy}}
+                    </fieldset>
+                    <button type="submit" class="btn btn-outline-success btn-lg btn-block">Update Profile</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="col-lg-5">
+            <div class="password-change-form" style="background-color: #fff;">
+                {% if user.userprofile.is_registered_from_social_account %}
+                    <div class="alert alert-info alert-dismissable text-center">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <small>
+                            for users logged in with their social media account won't need either password or change the password
+                        </small>
+                    </div>
+                {% endif %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name= "form-type" value="password-change">
+                    <fieldset class="form-group">
+                        <legend class="text-muted">Change account password</legend>
+                        <hr id= "inside-form-hr" size= "2">
+                        {{password_change_form|crispy}}
+                    </fieldset>
+                    <button type="submit" class="btn btn-outline-success btn-lg btn-block">Save new password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}

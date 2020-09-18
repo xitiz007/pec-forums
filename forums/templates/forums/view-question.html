@@ -1,0 +1,264 @@
+{% extends 'forums/base.html' %}
+{% load forum_extras %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" style="margin-bottom: 1rem;">
+            <div class="view-question-post">
+                {% if question.user == user %}
+                    <div class="control-buttons">
+                        <a href="{% url 'edit-question' question.id %}" class="remove-a-decoration">
+                            <i class="far fa-edit" style="color: #007bff; cursor: pointer;" title="edit"></i>
+                        </a>
+                        <a href="{% url 'delete-question' question.id %}" class="remove-a-decoration">
+                            <i class="far fa-trash-alt ml-1" style="color: #FF0000; cursor: pointer;" title="delete"></i>
+                        </a>
+                    </div>
+                {% endif %}
+                <div class="question-header-section">
+                    <div class="question-user-profile-picture">
+                        <img src="{{question.user.userprofile.profile_picture.url}}" alt="profile-picture" class="rounded-circle question-user-profile-image">
+                    </div>
+                    <div class="question-user-detail-section">
+                        <div class="question-user-username">
+                            <a href="{% url 'profile' question.user.id %}">
+                                {{question.user.first_name}} {{question.user.last_name}}
+                            </a>
+                        </div>
+                        <div class="question-user-faculty">
+                            <a href="{% url 'faculty' question.user.userprofile.faculty.id %}">
+                                {{question.user.userprofile.faculty.faculty_name}}
+                            </a>
+                        </div>
+                        <div class="question-date-posted">
+                            <span class="text-muted">
+                                {{question.date_posted|date:"j M, g:i a"}}
+                            </span>
+                            {% if question.edited %}
+                                <span class="user-edited-icon">
+                                    <i class="fas fa-user-edit" title="edited"></i>
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="question-posted-section">
+                    {{question.question_title}}
+                </div>
+                <div class="question-bottom-section">
+                    <span class="question-like-section">
+                        {% has_liked question.id user.id as liked %}
+                        <a href="{% url 'like-question' question.id %}" class="remove-a-decoration">
+                            {% if liked %}
+                                <i class="fas fa-heart" style="cursor: pointer;" title="liked"></i>
+                            {% else %}
+                                <i class="far fa-heart" style="cursor: pointer;" title="like"></i>
+                            {% endif %}
+                        </a>
+                       
+                        <small class="text-muted">
+                            {{question.get_likes}} like{{question.get_likes|pluralize}}
+                        </small>
+                    </span>
+                    <span class="question-comment-section ml-2 mr-2">
+                        {% has_commented question.id user.id as commented %}
+                        {% if commented %}
+                            <i class="fas fa-comments" style="cursor: pointer;" title="commented"></i>
+                        {% else %}
+                            <i class="far fa-comments" style="cursor: pointer;"></i>
+                        {% endif %}
+                        <small class="text-muted">
+                            {{question.get_answered_count}} answered
+                        </small>
+                    </span>
+                    <span class="question-posted-section">
+                        <small class="text-muted">
+                            posted in: 
+                            <a href="{% url 'faculty' question.faculty.id %}">
+                                {{question.faculty.faculty_name}}
+                            </a>
+                        </small>
+                    </span>
+                </div>
+            </div>
+            <div class="bottom-view">
+                <div class="create-answer">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{answer_form|crispy}}
+                        <input type="submit" class="btn btn-sm btn-outline-success btn-block" value="post my answer">
+                    </form>
+                </div>
+                <div class="question-answers">
+                    {% for answer in answers %}
+                        <div class="view-question-answer">
+                            {% if answer.user == user %}
+                            <div class="control-buttons">
+                                <a href="{% url 'delete-answer' answer.id question.id %}" class="remove-a-decoration">
+                                    <i class="fas fa-trash-alt" title="delete" style="cursor: pointer; font-size: 0.8em; color: #FF0000;"></i>
+                                </a>
+                            </div>
+                            {% endif %}
+
+                            <div class="question-header-section">
+                                <div class="question-user-profile-picture">
+                                    <img src="{{answer.user.userprofile.profile_picture.url}}" alt="profile-picture" class="rounded-circle answer-user-profile-image">
+                                </div>
+                                <div class="question-user-detail-section">
+                                    <div class="answer-user-username">
+                                        <a href="{% url 'profile' answer.user.id %}">
+                                            {{answer.user.first_name}} {{answer.user.last_name}}
+                                        </a>
+                                    </div>
+                                    <div class="answer-user-faculty">
+                                        <a href="{% url 'faculty' answer.user.userprofile.faculty.id %}">
+                                            {{answer.user.userprofile.faculty.faculty_name}}
+                                        </a>
+                                    </div>
+                                    <div class="answer-date-posted">
+                                        <span class="text-muted">
+                                            {{answer.date_answered|date:"j M, g:i a"}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="question-posted-section" style="word-wrap: break-word;">
+                                {{answer.answer}}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+                {% if answers.has_other_pages %}
+                            <nav aria-label="Page navigation example" class="mt-3">
+                                <ul class="pagination justify-content-center">
+                                    
+                                    {% if answers.has_previous %}
+                                        <li class="page-item" title="previous">
+                                            <a class="page-link" href="?page={{answers.previous_page_number}}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        {% if not answers.number == 2 %}
+                                            <li class="page-item" title="first">
+                                                <a class="page-link" href="?page=1">
+                                                    1
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{answers.previous_page_number}}">
+                                                {{answers.previous_page_number}}
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" aria-label="Previous" title="previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+        
+        
+                                    {% for page_number in answers.paginator.page_range %}
+                                        {% if page_number == answers.number %}
+                                            <li class="page-item">
+                                                <a class="btn btn-primary" href="?page={{page_number}}">{{page_number}}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+        
+                                    {% if answers.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{answers.next_page_number}}">
+                                                {{answers.next_page_number}}
+                                            </a>
+                                        </li>
+                                        {% if not answers.number == answers.paginator.num_pages|add:"-1" %}
+                                            <li class="page-item" title="last">
+                                                <a class="page-link" href="?page={{answers.paginator.num_pages}}">
+                                                    {{answers.paginator.num_pages}}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                        <li class="page-item" title="next">
+                                            <a class="page-link" href="?page={{answers.next_page_number}}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item" title="next">
+                                            <a class="page-link" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+        
+                                </ul>
+                            </nav>
+                {% endif %}
+        </div>
+        <div class="col-md-4" style="margin-bottom: 1rem;">
+            <div class="show-like-section" style="background: #fff; border-radius: 5px; padding: 10px;">
+                <div class="like-title-section text-center">
+                    <h6 class="text-muted" style="letter-spacing: 1px;">
+                        People who liked this post
+                    </h6>
+                </div>
+                <hr>
+                <div class="people-section">
+                    {% for like in likes %}
+                        <div class="people" style="padding: 5px 10px;"> 
+                            <span class= "user-profile-picture">
+                                <img src="{{like.user.userprofile.profile_picture.url}}" alt="profile-picture" width="20px" height="20px" class="rounded-circle">
+                            </span>
+                            <span class="user-user_name">
+                                <a href="{% url 'profile' like.user.id %}">
+                                    <small>
+                                    {{like.user.first_name}} {{like.user.last_name}}
+                                    </small>
+                                </a>
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% if likes.has_other_pages %}
+                    <div class="like-pagination-section">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" title="previous">
+                                    {% if likes.has_previous %}
+                                        <a class="page-link" href="?like_page_number={{likes.previous_page_number}}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    {% else %}
+                                        <a class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                                <li class="page-item" title="next">
+                                    {% if likes.has_next %}
+                                        <a class="page-link" href="?like_page_number={{likes.next_page_number}}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    {% else %}
+                                        <a class="page-link" aria-label="Next" title="next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

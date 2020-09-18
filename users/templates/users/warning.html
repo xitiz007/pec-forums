@@ -1,0 +1,10 @@
+{% extends 'forums/base.html' %}
+
+{% block content %}
+    <div class="card container">
+        <div class="card-body text-center text-muted">
+        <p>you need to logout first,</p>
+        <p>click <a href="{% url 'logout' %}">here</a> to logout</p>
+        </div>
+    </div>
+{% endblock content %}

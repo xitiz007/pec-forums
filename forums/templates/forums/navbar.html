@@ -1,0 +1,61 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home-page' %}" id="page-title">
+            <img src="{% static 'forums/images/forum.png'%}" width="30" height="30" class="d-inline-block align-top" alt="logo" loading="lazy">
+            PEC Forums
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home-page' %}">
+                        Home
+                    </a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <form class="form-inline my-2 my-lg-0" method="GET">
+                    <input id="question-search" class="form-control mr-sm-2" type="search" placeholder="Search questions....." aria-label="Search" name="search" style="display: inline-block;">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit" style="display: inline-block;">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </ul>
+            {% endif %}
+            <ul class="navbar-nav ml-auto">
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-danger add-question-button" href="{% url 'home-page' %}">Add Question</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a>
+                        <a class="dropdown-item" href="{% url 'setting' %}">Setting</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item " href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-success" href="{% url 'register' %}">Create account</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>

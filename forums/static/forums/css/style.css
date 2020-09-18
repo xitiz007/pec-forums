@@ -1,0 +1,479 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #ececec;
+}
+
+main{
+    margin-top: 6rem;
+}
+
+legend{
+    letter-spacing: 1px;
+}
+
+/* login / register page */
+.checkbox-label{
+    font-size: small;
+}
+
+#checkbox{
+    cursor: pointer;
+}
+
+.content-section{
+    background-color: #FFFFFF;
+    border: 1px solid d5d5d5;
+    border-radius: 15px;
+    padding: 15px;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.15);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.15);
+    margin-bottom: 2rem;
+}
+
+.content-section ul{
+    padding-left: 15px;
+}
+
+.college-title
+{
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.forgot-password{
+    margin: 0.5rem 0;
+    text-transform: lowercase;
+    font-size: small;
+}
+
+.forum-title{
+    font-size: 1.8rem;
+    font-weight: 350;
+    letter-spacing: 2px;
+}
+
+#page-title{
+    font-family: 'Rock Salt', cursive;
+}
+
+a.remove-a-decoration{
+    color: inherit; 
+    text-decoration: none;
+}
+
+/* social login icons */
+#facebook{
+    background-color: #3b5998;
+    margin-right: 5px;
+}
+
+#google{
+    background-color: #d34836;
+}
+
+
+.motto{
+    letter-spacing: 2px;
+}
+
+/* hr */
+#inside-form-hr{
+    background-color: black;
+    margin-bottom: 2rem;
+    opacity: 0.4;
+}
+
+#outside-form-hr{
+    background-color: black;
+    opacity: 0.1;
+}
+
+/* base_login_register */
+
+#intro{
+    margin-bottom: 2rem;
+}
+
+/* nav bar */
+
+.navbar{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.add-question-button{
+    border-radius: 23px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* media queries */
+
+/* navbar */
+@media only screen and (max-width: 991px)
+{
+    .add-question-button{
+        border-radius: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* login / register page */
+@media only screen and (max-width: 1199px)
+{
+    .college-title, .forum-title
+    {
+    font-size: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 991px){
+    .content-section{
+        margin: 2rem 0;
+    }
+}
+
+@media only screen and (max-width: 546px)
+{
+    .college-title, .forum-title
+    {
+    font-size: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 406px)
+{
+    .college-title, .forum-title
+    {
+    font-size: 1.3rem;
+    }
+}
+
+@media only screen and (max-width: 356px)
+{
+    .college-title, .forum-title
+    {
+    font-size: 1.1rem;
+    }
+
+}
+
+/* index.html */
+
+.content-section-index{
+    background: #ffffff;
+    padding: 15px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.create-question{
+    background: #E0E0E0;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+}
+
+.pagination-section nav, .pagination-section ul, .pagination-section li, .pagination-section a{
+    margin: 0;
+}
+
+.pagination-section a{
+    padding: 4px 10px;
+    margin: 5px;
+}
+
+textarea{
+    text-align: center;
+    padding: 5px;
+}
+
+textarea::placeholder{
+    letter-spacing: 1px;
+    padding-top: 5px;
+}
+
+.question-post{
+    background: #fff; 
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.control-buttons{
+    position: relative; 
+    float: right;
+}
+
+.question-user-profile-picture{
+    display: inline-block;
+}
+
+.question-user-profile-image{
+    margin-top: -40px;
+    width: 45px;
+    height: 45px;
+}
+
+.question-user-detail-section{
+    display: inline-block; 
+    margin-left: 5px;
+}
+
+
+.user-edited-icon{
+    font-size: 10px;
+}
+
+.user-edited-icon i{
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.question-posted-section{
+    margin: 7px 0;
+    word-wrap: break-word;
+}
+
+.question-user-username{
+    font-size: 18px;
+}
+
+.question-user-faculty{
+    font-size: 13.5px;
+    margin-top: -7px;
+}
+
+.question-date-posted{
+    font-size: 11px;
+    margin-top: -2px;
+
+}
+/* profile.html */
+
+.profile-picture{
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 1rem;
+}
+
+.username{
+    font-weight: 550;
+    letter-spacing: 1px;
+}
+
+/* setting.html */
+
+
+.profile-picture-setting{
+    width: 150px;
+    margin-top: -15px;
+    margin-bottom: 5px;
+}
+
+.user-profile-change-form{
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 2rem; 
+}
+
+.password-change-form{
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.password-change-form ul{
+    padding-left: 15px;
+}
+
+/* profile.html */
+
+.profile-posts{
+    background-color: #fff;
+}
+
+.profile-area{
+    margin-bottom: 20px;
+}
+
+.posted-view-section{
+    display: inline-block;
+}
+
+.filter{
+    background: #fff;
+    padding: 10px 30px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.profile-question-post{
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 431px)
+{
+    .posted-view-section{
+        display: block;
+    }
+
+}
+
+@media only screen and (max-width: 419px)
+{
+    .question-bottom-section{
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 398px)
+{
+    .question-bottom-section{
+        font-size: 14px;
+    }
+}
+
+
+
+
+/* view-question.html */
+
+.edit-panel, .edit-panel-answer{
+    float: right;
+}
+
+.bottom-view{
+    max-width: 800px;
+    padding: 10px;
+    margin: 0 auto;
+    background: #f2f2f2;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid rgb(0, 0, 0, .1);
+}
+
+.create-answer{
+    padding: 0 20px;
+}
+
+.like-pagination-section a{
+    padding: 4px 8px;
+}
+
+.like-pagination-section li{
+    margin-right: 8px;
+}
+
+.post-body-answer{
+    padding-top: 15px;
+}
+
+.top-faculty-date{
+    font-size: 10px;
+}
+
+.user-image-answer{
+    width: 40px;
+    height: 40px;
+    display: inline-block; 
+}
+
+.view-question-post{
+    background: #fff;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.view-question-answer{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.answer-user-profile-image{
+    margin-top: -40px;
+    width: 35px;
+    height: 35px;
+}
+
+.answer-user-username{
+    font-size: 16px;
+}
+
+.answer-user-faculty{
+    font-size: 11.5px;
+    margin-top: -6px;
+}
+
+.answer-date-posted{
+    font-size: 11px;
+    margin-top: -3px;
+
+}
+
+@media only screen and (min-width: 768px)
+{
+    .edit-panel{
+        margin-left: 350px;
+    }
+
+    .edit-panel-answer{
+        margin-left: 430px;
+    }
+}
+
+@media only screen and (min-width: 992px)
+{
+    .edit-panel-answer{
+        margin-left: 530px;
+    }
+}
+
+@media only screen and (max-width: 374px)
+{
+    .question-bottom-section{
+        font-size: 13px;
+    }
+}
+
+/* confirmation.html */
+.confirmation{
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+
+}
+
+/* faculty.html */
+
+@media only screen and (max-width: 575px)
+{
+    #student-search{
+        width: 80%;
+        margin-right: 5px;
+    }
+
+    #question-search{
+        width: 80%;
+        margin-right: 5px;
+    }
+}
+
+
